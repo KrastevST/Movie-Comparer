@@ -48,6 +48,12 @@ const onInput = async event => {
       ${movie.Title}
     `;
 
+    option.addEventListener('click', () => {
+      dropdown.classList.remove('is-active');
+      input.value = movie.Title;
+      onMovieSelect(movie);
+    });
+
     resultsWrapper.appendChild(option);
   }
 };
@@ -58,3 +64,33 @@ document.addEventListener('click', event => {
     dropdown.classList.remove('is-active');
   }
 });
+
+const onMovieSelect =  async (movie) => {
+  const response = await axios.get('http://www.omdbapi.com/', {
+    params: {
+      apikey: '7d293ab4',
+      i: movie.imdbID
+    }
+  });
+
+  document.querySelector('#summary').innerHTML = movieTemplate(response.data);
+};
+
+const movieTemplate = (movieDetailed) => {
+  return `
+    <article class="media">
+      <figure class="media-left">
+        <p class="image">
+          <img src="${movieDetailed.Poster}" />
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <h1>${movieDetailed.Title}</h1>
+          <h4>${movieDetailed.Genre}</h4>
+          <p>${movieDetailed.Plot}</p>
+        </div>
+      </div>
+    </article>
+  `;
+};
