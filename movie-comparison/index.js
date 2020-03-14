@@ -75,17 +75,30 @@ const runComparisson = () => {
     const leftSideValue = parseFloat(leftStat.dataset.value);
     const rightSideValue = parseFloat(rightStat.dataset.value);
 
-    if (leftSideValue > rightSideValue || 
-        isNaN(rightSideValue))
-    {
+    if ( isNaN(rightSideValue)) {
       rightStat.classList.remove('is-primary');
       rightStat.classList.add('is-warning');
     }
-    if (rightSideValue > leftSideValue ||
-        isNaN(leftSideValue))
-    {
+    if (isNaN(leftSideValue)) {
       leftStat.classList.remove('is-primary');
       leftStat.classList.add('is-warning');
+    }
+
+    if (rightSideValue > leftSideValue) {
+      rightStat.classList.add('is-primary');
+      rightStat.classList.remove('is-warning');
+      leftStat.classList.remove('is-primary');
+      leftStat.classList.add('is-warning');
+    } else if (rightSideValue < leftSideValue) {
+      rightStat.classList.remove('is-primary');
+      rightStat.classList.add('is-warning');
+      leftStat.classList.add('is-primary');
+      leftStat.classList.remove('is-warning');
+    } else if (rightSideValue === leftSideValue) {
+      rightStat.classList.add('is-primary');
+      rightStat.classList.remove('is-warning');
+      leftStat.classList.add('is-primary');
+      leftStat.classList.remove('is-warning');
     }
   });
 };
