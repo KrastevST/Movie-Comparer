@@ -51,3 +51,15 @@ it('After searching, dropdown opens up', async () => {
 
   assert.include(dropdown.className, 'is-active')
 })
+
+it('After searching, displays some results', async () => {
+  const input = document.querySelector('input')
+  input.value = 'inception'
+  input.dispatchEvent(new Event('input'))
+
+  await waitFor('.dropdown-item')
+
+  const items = document.querySelectorAll('.dropdown-item')
+
+  assert.equal(items.length, 3)
+})
